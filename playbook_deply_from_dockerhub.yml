@@ -1,0 +1,13 @@
+---
+- hosts: webservers
+  become: true
+  tasks:
+   - name: stop previous version docker
+     shell: sudo docker stop hw_jenkins-ansible-dockerhub 
+   - name: remove stopped container
+     shell: sudo docker rm -f hw_jenkins-ansible-dockerhub 	  
+   - name: remove docker images
+     shell: sudo docker image rm -f jagannath12/hw_jenkins-ansible-dockerhub   
+   - name: create docker image 
+     shell: sudo docker run -d --name hw_jenkins-ansible-dockerhub -p 8090:8080 jagannath12/hw_jenkins-ansible-dockerhub:latest
+
